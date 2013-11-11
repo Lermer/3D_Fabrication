@@ -11,13 +11,19 @@ For the third iteration I made a brush holder with 4 sections.
 My Parametric Boxe's Controls are as follows
 
 //Box Controls
+
 boxWidth = // Y axis
+
 boxLength = // X axis
+
 boxDepth = // Z axis
+
 boxThickness = // controls box thickness and lid thickness
 
 // Box Divider Controls
+
 dividerThickness = boxThickness;
+
 yDivider = true; // Adds or removes divider that runs along y axis
 xDivider = true; // Adds or removes divider that runs along x axis
 fourSections = false; // true = 4 sections / false = 3 sections

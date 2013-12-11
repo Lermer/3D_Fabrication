@@ -18,17 +18,17 @@ To Do List:
 //Basic Controls
 //
 	//Display Parts
-		faucetAttachment = true ;
-		fountain = false;
+		faucetAttachment = true;
+		fountain = true;
 
 	//Faucet Attachment (Thermochromic PLA)
-		faucetDiameter = 23.5; //Diameter of inner circle
+		faucetDiameter = 25; //Diameter of inner circle
 		attachmentHeight = 23;
 		attachmentThickness = 2;
 		
 	//Fountain (Soft PLA)
 		fountainHeight = 30;
-		fountainWidth = 45;
+		fountainWidth = 50;
 		fountainSpoutDiameter1 = 10;
 		fountainSpoutDiameter2 = 15;
 		fountainSpoutLength = 20;
@@ -48,7 +48,8 @@ To Do List:
 		ridgeRadius = (faRadius + ridgeThickness);
 		fountainRadius = (fountainWidth/2);
 		fountainOval = (fountainHeight + ((fountainHeight)*.7));
-		fountainCutoffs = ((fountainHeight*.7)/2);
+		fountainCutoff1 = (((fountainHeight*.7)/3)*2);
+		fountainCutoff2 = ((fountainHeight*.7)/3);
 		fountainSpoutRadius1 = (fountainSpoutDiameter1/2);
 		fountainSpoutRadius2 = (fountainSpoutDiameter2/2);
 		
@@ -62,9 +63,9 @@ if(faucetAttachment == true){
 }
 
 if(fountain == true){
-	rotate([0, 180, 0])
+	translate([0,60,0])
 	fountain();
-	
+	fountainSpout();
 }
 
 //
@@ -86,34 +87,29 @@ module connecterRidge(){
 }
 
 module fountain(){
-	translate([0,0,(fountainHeight+fountainCutoffs-ridgeHeight)])
+	translate([0,0,(fountainHeight-ridgeHeight)])
 	connecterRidge();
+	translate([0,0,-fountainCutoff2])
 	difference(){
-		fountainBody();
+		translate([0,0,(fountainOval/2)]) resize([0,0,fountainOval]) 
+		sphere(fountainRadius);
 		fountainCutouts();
 	}
 }
 
 module fountainCutouts(){
-		translate([0,0,(fountainCutoffs)])
+		translate([0,0,(fountainCutoff2)])
 		cylinder(fountainHeight,ridgeRadius,ridgeRadius); //Inner Cylinder
-		cylinder(fountainCutoffs,60,60); //Bottom Cutout
-		translate([0,0,(fountainOval-fountainCutoffs)]) 
-		cylinder(fountainCutoffs,60,60); //Top Cutout
-		translate([-25,0,32])
-		rotate([0, 140, 0])
-		cylinder(fountainSpoutLength,(fountainSpoutRadius1-fountainSpoutThickness),(fountainSpoutRadius2-fountainSpoutThickness));
+		cylinder(fountainCutoff2,60,60); //Bottom Cutout
+		translate([0,0,(fountainOval-fountainCutoff1)]) 
+		cylinder(fountainCutoff1,60,60); //Top Cutout
 }
 
 module fountainSpout(){
-	translate([-25,0,32])
+	translate([0,0,0])
 	rotate([0, 140, 0])
-	cylinder(fountainSpoutLength,fountainSpoutRadius1,fountainSpoutRadius2);		
-}
-
-module fountainBody(){
-fountainSpout();
-translate([0,0,(fountainOval/2)]) resize([0,0,fountainOval]) 
-sphere(fountainRadius);
-
+	difference(){
+		cylinder(fountainSpoutLength,fountainSpoutRadius1,fountainSpoutRadius2);
+		cylinder(fountainSpoutLength,(fountainSpoutRadius1-fountainSpoutThickness),(fountainSpoutRadius2-fountainSpoutThickness));
+		}
 }

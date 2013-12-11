@@ -18,11 +18,11 @@ To Do List:
 //Basic Controls
 //
 	//Display Parts
-		faucetAttachment = true ;
-		fountain = false;
+		faucetAttachment = false ;
+		fountain = true;
 
 	//Faucet Attachment (Thermochromic PLA)
-		faucetDiameter = 23.5; //Diameter of inner circle
+		faucetDiameter = 24; //Diameter of inner circle
 		attachmentHeight = 23;
 		attachmentThickness = 2;
 		
@@ -49,6 +49,7 @@ To Do List:
 		fountainRadius = (fountainWidth/2);
 		fountainOval = (fountainHeight + ((fountainHeight)*.7));
 		fountainCutoffs = ((fountainHeight*.7)/2);
+		
 		fountainSpoutRadius1 = (fountainSpoutDiameter1/2);
 		fountainSpoutRadius2 = (fountainSpoutDiameter2/2);
 		
@@ -87,7 +88,6 @@ module connecterRidge(){
 
 module fountain(){
 	translate([0,0,(fountainHeight+fountainCutoffs-ridgeHeight)])
-	connecterRidge();
 	difference(){
 		fountainBody();
 		fountainCutouts();
@@ -95,9 +95,9 @@ module fountain(){
 }
 
 module fountainCutouts(){
-		translate([0,0,(fountainCutoffs)])
-		cylinder(fountainHeight,ridgeRadius,ridgeRadius); //Inner Cylinder
-		cylinder(fountainCutoffs,60,60); //Bottom Cutout
+		translate([0,0,(fountainCutoffs-8)])
+		cylinder(fountainHeight+8,faRadius+1,faRadius+1); //Inner Cylinder
+		cylinder(fountainCutoffs-8,60,60); //Bottom Cutout
 		translate([0,0,(fountainOval-fountainCutoffs)]) 
 		cylinder(fountainCutoffs,60,60); //Top Cutout
 		translate([-25,0,32])
